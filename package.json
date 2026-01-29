@@ -1,0 +1,12 @@
+{
+  "name": "bennystab",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "node server/index.js"
+  }
+}

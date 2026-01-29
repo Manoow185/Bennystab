@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BennyStab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1>BennyStab</h1>
+        <p class="subtitle">Gentils vs Saboteurs — déduction sociale en temps réel.</p>
+      </header>
+
+      <section id="lobby" class="panel">
+        <div class="lobby-hero">
+          <div class="lobby-hero-content">
+            <span class="hero-label">Atelier Benny’s</span>
+            <h2>Prépare ton équipe, verrouille ton look.</h2>
+            <p>
+              Le garage s’anime. Les néons chauffent, les clés tournent, et chaque skin compte. Les
+              Saboteurs se fondent dans la masse — garde l’œil ouvert.
+            </p>
+            <div class="lobby-actions">
+              <input id="playerName" placeholder="Pseudo" maxlength="16" />
+              <button id="createRoom">Créer une room</button>
+              <input id="roomId" placeholder="Code room" maxlength="12" />
+              <button id="joinRoom">Rejoindre</button>
+            </div>
+          </div>
+          <div class="lobby-hero-panel">
+            <div class="lobby-info">
+              <div>
+                <span class="info-label">Room</span>
+                <span id="currentRoom" class="info-value">-</span>
+              </div>
+              <div>
+                <span class="info-label">Host</span>
+                <span id="hostLabel" class="info-value">-</span>
+              </div>
+              <div>
+                <span class="info-label">État</span>
+                <span id="stateLabel" class="info-value">LOBBY</span>
+              </div>
+            </div>
+            <div class="ready-row">
+              <label class="ready-toggle">
+                <input type="checkbox" id="readyToggle" />
+                Prêt
+              </label>
+              <button id="startGame" class="cta-start">DÉMARRER LA PARTIE</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="lobby-grid">
+          <div class="skins-panel">
+            <h3>Vitrine des skins</h3>
+            <p class="panel-subtitle">Chaque look est unique. Choisis vite.</p>
+            <div id="skins" class="skin-grid"></div>
+          </div>
+          <div class="players-panel">
+            <h3>Équipe en préparation</h3>
+            <p class="panel-subtitle">Jusqu’à 8 joueurs. Rôles secrets au départ.</p>
+            <div id="playersList" class="players-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="game" class="panel hidden">
+        <div class="game-header">
+          <div>
+            <div class="role-badge">
+              <span class="role-title">Rôle</span>
+              <span id="roleLabel">-</span>
+              <span class="role-title">Équipe</span>
+              <span id="teamLabel">-</span>
+            </div>
+          </div>
+          <div>
+            <strong>Phase :</strong> <span id="phaseLabel">-</span>
+          </div>
+          <div>
+            <button id="resetRoom">Reset room</button>
+          </div>
+        </div>
+        <canvas id="gameCanvas" width="640" height="480"></canvas>
+        <div class="controls-help">
+          <h3>Contrôles rapides</h3>
+          <ul>
+            <li><strong>Déplacement</strong> : flèches ou ZQSD</li>
+            <li><strong>Actions</strong> : boutons en bas (report/kill/sabotage/repair)</li>
+            <li><strong>Chat</strong> : libre en proximité (RUNNING), global en discussion</li>
+          </ul>
+        </div>
+        <div class="tasks-panel">
+          <h3>Quêtes Benny’s</h3>
+          <div class="tasks-actions">
+            <select id="taskSelect"></select>
+            <button id="taskInteract">Interagir</button>
+          </div>
+          <ul id="tasksList"></ul>
+        </div>
+        <div class="game-actions">
+          <select id="targetSelect"></select>
+          <button id="reportBtn">Report</button>
+          <button id="sabotageBtn">Sabotage</button>
+          <button id="killBtn">Kill (cible)</button>
+          <button id="repairBtn">Repair</button>
+          <button id="investigateBtn">Enquête (chef)</button>
+          <button id="journalBtn">Journal (comptable)</button>
+          <button id="comptableRevealBtn">Révéler (comptable)</button>
+          <button id="depanneurHintBtn">Indice (dépanneur)</button>
+          <button id="emergencyBtn">Bouton urgence</button>
+        </div>
+        <div class="vote-panel" id="votePanel">
+          <h3>Vote</h3>
+          <div id="voteOptions"></div>
+          <button id="skipVote">Skip</button>
+        </div>
+        <div class="chat-panel">
+          <div class="chat-header">
+            <span id="chatChannel">PROXIMITÉ</span>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <form id="chatForm">
+            <input id="chatInput" maxlength="160" placeholder="Message..." />
+            <button type="submit">Envoyer</button>
+          </form>
+        </div>
+        <div id="endScreen" class="end-screen hidden">
+          <div class="end-card">
+            <h2 id="endTitle">Fin de partie</h2>
+            <p id="endWinner">-</p>
+            <h3>Révélation des rôles</h3>
+            <ul id="endReveal"></ul>
+            <button id="endClose">Retour lobby</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>
